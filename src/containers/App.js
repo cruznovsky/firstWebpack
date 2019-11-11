@@ -2,6 +2,7 @@ import React from 'react';
 import uuid from 'uuid';
 
 import Title from "../components/Title.js";
+import TodoList from "../components/TodoList.js";
 import style from './App.css';
 
 class App extends React.Component {
@@ -9,7 +10,16 @@ class App extends React.Component {
         super(props);
         this.state = {
             title: "'To do' APP!",
-            data: []
+            data: [{
+                id: 1,
+                text: 'clean room'
+            }, {
+                id: 2,
+                text: 'wash the dishes'
+            }, {
+                id: 3,
+                text: 'feed my cat'
+            }]
         };
     }
 
@@ -28,12 +38,18 @@ class App extends React.Component {
     }
 
     render() {
+        const tasksList = this.state.data.map((data, key) => (
+            <TodoList key={key} data={data} remove={this.removeTodo.bind(this)} />
+        ));
         return (
             <div className={style.TodoApp}>
                 <Title
                     title={this.state.title}
                     itemList={this.state.data.length}
                 />
+                <div className={style.TodoContainer}>
+                    <ul className={style.TodoUl}>{tasksList}</ul>
+                </div>
             </div>
         );
     }
